@@ -15,11 +15,16 @@ public class LinkedListAlgo {
   public static Node reverse(Node list) {
     Node curr = list, pre = null;
     while (curr != null) {
+      //1.先保存一下下一个节点
       Node next = curr.next;
+     //2.将当前节点的next指针指向前一节点
       curr.next = pre;
+     //3.将当前节点变为前一个节点
       pre = curr;
+     //4.将下一个节点变为当前节点，重复上述操作，直到最后一个节点
       curr = next;
     }
+	  //5.最后返回当前节点，即原来的最后一个节点
     return pre;
   }
 
