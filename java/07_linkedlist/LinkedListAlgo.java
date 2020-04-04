@@ -28,7 +28,7 @@ public class LinkedListAlgo {
     return pre;
   }
 
-  // 检测环
+  // 检测环------快慢指针法------
   public static boolean checkCircle(Node list) {
     if (list == null) return false;
 
@@ -45,47 +45,13 @@ public class LinkedListAlgo {
     return false;
   }
 
-  // 有序链表合并
-  // public static Node mergeSortedLists(Node la, Node lb) {
-    // if (la == null) return lb;
-    // if (lb == null) return la;
-
-    // Node p = la;
-    // Node q = lb;
-    // Node head;
-    // if (p.data < q.data) {
-    //   head = p;
-    //   p = p.next;
-    // } else {
-    //   head = q;
-    //   q = q.next;
-    // }
-    // Node r = head;
-
-    // while (p != null && q != null) {
-    //   if (p.data < q.data) {
-    //     r.next = p;
-    //     p = p.next;
-    //   } else {
-    //     r.next = q;
-    //     q = q.next;
-    //   }
-    //   r = r.next;
-    // }
-
-    // if (p != null) {
-    //   r.next = p;
-    // } else {
-    //   r.next = q;
-    // }
-
-    // return head;
-   //}
-  	
-  	//-----------------------------------------
 
     // 有序链表合并 Leetcode 21 
     /**
+    将两个升序链表合并为一个新的升序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 
+	示例：
+	输入：1->2->4, 1->3->4
+	输出：1->1->2->3->4->4
  	* Definition for singly-linked list.
  	* public class ListNode {
  	*     int val;
@@ -97,7 +63,7 @@ public class LinkedListAlgo {
         ListNode soldier = new ListNode(0); //利用哨兵结点简化实现难度 技巧三
         ListNode p = soldier;
         
-        while ( l1 != null && l2 != null ){
+        while ( l1 != null && l2 != null ){ 
             if ( l1.val < l2.val ){
                 p.next = l1;
                 l1 = l1.next;
@@ -115,7 +81,7 @@ public class LinkedListAlgo {
     }
 
 
-  // 删除倒数第K个结点
+  // 删除倒数第K个结点 注意null的判断
   public static Node deleteLastKth(Node list, int k) {
     Node fast = list;
     int i = 1;
@@ -123,18 +89,18 @@ public class LinkedListAlgo {
       fast = fast.next;
       ++i;
     }
-
+    //防止出现 k 大于 链表的长度的情况，此时fast == null
     if (fast == null) return list;
 
     Node slow = list;
     Node prev = null;
-    while (fast.next != null) {
+    while (fast.next != null) {//将fast指到最后一个节点
       fast = fast.next;
-      prev = slow;
-      slow = slow.next;
+      prev = slow;//pre和fast差了k个节点
+      slow = slow.next;//slow最终指向的节点就是要被删除的
     }
 
-    if (prev == null) {
+    if (prev == null) {//防止出现链表长度=n，k=n，即删除第一个节点的情况，此时pre还是null
       list = list.next;
     } else {
       prev.next = prev.next.next;
@@ -142,14 +108,14 @@ public class LinkedListAlgo {
     return list;
   }
 
-  // 求中间结点
+  // 求中间结点 快慢指针 举个简单的例子，特别注意当链表长度是奇数时
   public static Node findMiddleNode(Node list) {
     if (list == null) return null;
 
     Node fast = list;
     Node slow = list;
 
-    while (fast != null && fast.next != null) {
+    while (fast != null && fast.next != null) {//特别注意当链表长度是奇数时
       fast = fast.next.next;
       slow = slow.next;
     }
